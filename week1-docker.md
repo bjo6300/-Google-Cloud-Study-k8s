@@ -28,13 +28,13 @@ docker run hello-world
 
 Docker 데몬이 hello-world 이미지를 검색했으나 로컬에서 이미지를 찾지 못했고, Docker Hub라는 공개 레지스트리에서 이미지를 가져오고, 가져온 이미지에서 컨테이너를 생성하고, 컨테이너를 실행
 
-1. Docker Hub에서 가져온 컨테이너 이미지를 확인
+2. Docker Hub에서 가져온 컨테이너 이미지를 확인
 
 ```jsx
 docker images
 ```
 
-1. 실행 중인 컨테이너 확인
+3. 실행 중인 컨테이너 확인
 
 ```jsx
 docker ps
@@ -42,7 +42,7 @@ docker ps
 
 실행 종료했기 때문에 hello-world는 결과창에 나오지 않는다.
 
-1. 모든 컨테이너 확인
+4. 모든 컨테이너 확인
 
 ```jsx
 docker ps -a
@@ -56,7 +56,7 @@ docker ps -a
 mkdir test && cd test
 ```
 
-1.  `Dockerfile` 만들기
+2.  `Dockerfile` 만들기
 
 ```jsx
 cat > Dockerfile <<EOF
@@ -73,7 +73,7 @@ CMD ["node", "app.js"]
 EOF
 ```
 
-1. 노드 애플리케이션을 생성
+3. 노드 애플리케이션을 생성
 
 ```jsx
 cat > app.js <<EOF
@@ -95,7 +95,7 @@ process.on('SIGINT', function() {
 EOF
 ```
 
-1. 이미지 빌드
+4. 이미지 빌드
 
 ```jsx
 docker build -t node-app:0.1 .
@@ -104,7 +104,7 @@ docker build -t node-app:0.1 .
 - . 은 현재 디렉터리 의미
 - `-t`는 `name:tag` 문법을 사용하여 이미지의 이름과 태그를 지정
 
-1. 빌드한 이미지 확인
+5. 빌드한 이미지 확인
 
 ```jsx
 docker images
@@ -118,19 +118,19 @@ docker images
 docker run -p 4000:80 --name my-app node-app:0.1
 ```
 
-1. 다른 터미널을 열고(Cloud Shell에서 `+` 아이콘을 클릭) 서버를 테스트
+2. 다른 터미널을 열고(Cloud Shell에서 `+` 아이콘을 클릭) 서버를 테스트
 
 ```jsx
 curl http://localhost:4000
 ```
 
-1. 초기 터미널을 닫은 후 다음 명령어를 실행하여 컨테이너를 중지하고 삭제
+3. 초기 터미널을 닫은 후 다음 명령어를 실행하여 컨테이너를 중지하고 삭제
 
 ```jsx
 docker stop my-app && docker rm my-app
 ```
 
-1. 백그라운드에서 컨테이너를 시작
+4. 백그라운드에서 컨테이너를 시작
 
 ```jsx
 docker run -p 4000:80 --name my-app -d node-app:0.1
@@ -139,7 +139,7 @@ docker ps
 
 -d : 백그라운드에서 시작, demon을 의미
 
-1. `docker ps`의 출력된 결과에서 컨테이너가 실행 중임을 확인할 수 있다. `docker logs [container_id]`를 실행하면 로그를 볼 수 있다.
+5. `docker ps`의 출력된 결과에서 컨테이너가 실행 중임을 확인할 수 있다. `docker logs [container_id]`를 실행하면 로그를 볼 수 있다.
 
 ```jsx
 docker logs [container_id]
@@ -153,7 +153,7 @@ docker logs [container_id]
 cd test
 ```
 
-1. 원하는 텍스트 편집기(예: nano 또는 vim)로 `app.js`를 편집하고 'Hello World'를 다른 문자열로 변경
+2. 원하는 텍스트 편집기(예: nano 또는 vim)로 `app.js`를 편집하고 'Hello World'를 다른 문자열로 변경
 
 ```jsx
 ....
@@ -165,7 +165,7 @@ const server = http.createServer((req, res) => {
 ....
 ```
 
-1. 새 이미지를 빌드하고 `0.2`로 태그를 지정
+3. 새 이미지를 빌드하고 `0.2`로 태그를 지정
 
 ```jsx
 docker build -t node-app:0.2 .
@@ -198,14 +198,14 @@ Successfully tagged node-app:0.2
 
 **3단계** 이후부터는 `app.js`를 변경했기 때문에 레이어가 수정
 
-1. 새 이미지 버전으로 다른 컨테이너를 실행한다. 이때 호스트 포트를 80 대신 8080으로 매핑하는 방법을 확인한다. (포트 4000은 이전 이미지가 사용중)
+4. 새 이미지 버전으로 다른 컨테이너를 실행한다. 이때 호스트 포트를 80 대신 8080으로 매핑하는 방법을 확인한다. (포트 4000은 이전 이미지가 사용중)
 
 ```jsx
 docker run -p 8080:80 --name my-app-2 -d node-app:0.2
 docker ps
 ```
 
-1. 컨테이너 테스트
+5. 컨테이너 테스트
 
 ```jsx
 curl http://localhost:8080
@@ -213,7 +213,7 @@ curl http://localhost:8080
 
 `Welcome to Cloud`
 
-1. 처음 작성한 컨테이너 테스트
+6. 처음 작성한 컨테이너 테스트
 
 ```jsx
 curl http://localhost:4000
@@ -231,7 +231,7 @@ docker logs -f [container_id]
 
 컨테이너가 실행중이면 -f 옵션 사용
 
-1. 다른 터미널을 열고(Cloud Shell에서 + 아이콘을 클릭) 다음 명령어를 입력
+2. 다른 터미널을 열고(Cloud Shell에서 + 아이콘을 클릭) 다음 명령어를 입력
 
 ```jsx
 docker exec -it [container_id] bash
@@ -241,19 +241,19 @@ docker exec -it [container_id] bash
 
 `root@xxxxxxxxxxxx:/app#`
 
-1. Bash 세션을 종료
+3. Bash 세션을 종료
 
 ```jsx
 exit
 ```
 
-1. Docker에서 컨테이너의 메타데이터를 검토
+4. Docker에서 컨테이너의 메타데이터를 검토
 
 ```jsx
 docker inspect [container_id]
 ```
 
-1. `--format`
+5. `--format`
 을 사용하여 반환된 JSON의 특정 필드를 검사합니다. 예시이다.
 
 ```jsx
@@ -295,25 +295,25 @@ export PROJECT_ID=$(gcloud config get-value project)
 cd ~/test
 ```
 
-1. 명령어를 실행하여 `node-app:0.2`에 태그를 지정
+2. 명령어를 실행하여 `node-app:0.2`에 태그를 지정
 
 ```jsx
 docker build -t us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:0.2 .
 ```
 
-1. 빌드된 Docker 이미지를 확인
+3. 빌드된 Docker 이미지를 확인
 
 ```jsx
 docker images
 ```
 
-1. 이미지를 Artifact Registry로 푸시
+4. 이미지를 Artifact Registry로 푸시
 
 ```jsx
 docker push us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:0.2
 ```
 
-1. Artifact Registry에서 자신이 만든 repository 확인
+5. Artifact Registry에서 자신이 만든 repository 확인
 
 **이미지 테스트하기**
 
@@ -324,7 +324,7 @@ docker stop $(docker ps -q)
 docker rm $(docker ps -aq)
 ```
 
-1. 모든 docker 이미지 삭제
+2. 모든 docker 이미지 삭제
 
 ```jsx
 docker rmi us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:0.2
@@ -333,7 +333,7 @@ docker rmi -f $(docker images -aq) # remove remaining images
 docker images
 ```
 
-1. 이미지를 가져와서 실행
+3. 이미지를 가져와서 실행
 
 ```jsx
 docker pull us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:0.2
