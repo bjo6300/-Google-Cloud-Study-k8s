@@ -320,13 +320,13 @@ kubectl create -f deployments/hello-green.yaml
 curl -ks https://`kubectl get svc frontend -o=jsonpath="{.status.loadBalancer.ingress[0].ip}"`/version
 ```
 
-1. 서비스가 새 버전을 가리키도록 업데이트
+3. 서비스가 새 버전을 가리키도록 업데이트
 
 ```jsx
 kubectl apply -f services/hello-green.yaml
 ```
 
-3. 서비스가 업데이트되면 'green' 배포가 즉시 사용된다. 이제 항상 새 버전이 사용되고 있는지 확인한다.
+4. 서비스가 업데이트되면 'green' 배포가 즉시 사용된다. 이제 항상 새 버전이 사용되고 있는지 확인한다.
 
 ```jsx
 curl -ks https://`kubectl get svc frontend -o=jsonpath="{.status.loadBalancer.ingress[0].ip}"`/version
